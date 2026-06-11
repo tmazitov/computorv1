@@ -26,6 +26,19 @@ func NewEquation(raw string) (*Equation, error) {
 	}, nil
 }
 
+func (e Equation) MaxDegree() int {
+	return e.maxDegree
+}
+
+func (e Equation) IsEmpty() bool {
+	for _, scalar := range e.scalar {
+		if scalar != 0 {
+			return false
+		}
+	}
+	return true
+}
+
 func (e Equation) ToString() string {
 	var degrees []int
 

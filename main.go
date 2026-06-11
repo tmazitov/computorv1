@@ -20,4 +20,17 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("Reduced form: %s\n", equation.ToString())
+
+	equationDegree := equation.MaxDegree()
+	if equationDegree > 0 {
+		fmt.Printf("Polynomial degree: %d\n", equationDegree)
+	} else if !equation.IsEmpty() {
+		fmt.Println("No solution.")
+		return
+	} else {
+		fmt.Println("Any real number is a solution.")
+		return
+	}
+
+	
 }
