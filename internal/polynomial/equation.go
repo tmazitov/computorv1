@@ -22,6 +22,10 @@ func NewEquation(scalarMap parsing.ScalarMap) (*Equation, error) {
 	}, nil
 }
 
+func (e Equation) Degree() int {
+	return e.maxDegree
+}
+
 func (e Equation) Scalar() parsing.ScalarMap {
 	return e.scalar
 }
