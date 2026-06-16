@@ -45,8 +45,12 @@ func main() {
 	if len(roots) == 0 {
 		fmt.Println("Discriminant is strictly negative, no real solution.")
 	} else if len(roots) == 1 {
-		fmt.Printf("Discriminant is zero, the solution is:\n%.6g\n", roots[0])
+		fmt.Println("Discriminant is zero, the solution is:")
 	} else {
-		fmt.Printf("Discriminant is strictly positive, the two solutions are:\n%.6g\n%.6g\n", roots[0], roots[1])
+		fmt.Println("Discriminant is strictly positive, the two solutions are:")
+	}
+
+	for _, root := range roots {
+		fmt.Println(root.ToString())
 	}
 }

@@ -16,13 +16,13 @@ func sqrt(n float32) float32 {
     return (lo + hi) / 2
 }
 
-func (e Equation) Solve() []float32 {
-	
+func (e Equation) Solve() []Root {
+
 	degree := e.Degree()
 	if degree == 1 {
-		return []float32{-e.scalar[0] / e.scalar[1]}
+		return []Root{NewRoot(-e.scalar[0]/e.scalar[1], 0)}
 	} else if degree != 2 {
-		return []float32{}
+		return []Root{}
 	}
 
 	a := e.scalar[2]
@@ -31,18 +31,18 @@ func (e Equation) Solve() []float32 {
 	d := e.Discriminant()
 
 	if d >= 0 {
-
-		sqrtDiscriminant := sqrt(d)
-		root1 := (-b - sqrtDiscriminant) / (2 * a)
-		root2 := (-b + sqrtDiscriminant) / (2 * a)
+		sqrtD := sqrt(d)
+		root1 := NewRoot((-b-sqrtD)/(2*a), 0)
+		root2 := NewRoot((-b+sqrtD)/(2*a), 0)
 
 		if d == 0 {
-			return []float32{root1}
+			return []Root{root1}
 		}
-		return []float32{root1, root2}
+		return []Root{root1, root2}
 	}
 
-
-
-	return nil
+	sqrtD := sqrt(-d)
+	re := -b / (2 * a)
+	im := sqrtD / (2 * a)
+	return []Root{NewRoot(re, -im), NewRoot(re, im)}
 }
