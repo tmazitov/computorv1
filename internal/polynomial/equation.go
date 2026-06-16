@@ -4,39 +4,26 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
+	"github.com/tmazitov/computorv1/internal/parsing"
 )
 
 type Equation struct {
-	scalar    map[int]float32
+	scalar    parsing.ScalarMap
 	maxDegree int
 }
 
-func NewEquation(raw string) (*Equation, error) {
+func NewEquation(scalarMap parsing.ScalarMap) (*Equation, error) {
 
-	scalar, err := extractFromString(raw)
-	if err != nil {
-		return nil, err
-	}
-
-	maxDegree := getMaxDegree(scalar)
+	maxDegree := scalarMap.GetMaxDegree()
 
 	return &Equation{
-		scalar:    scalar,
+		scalar: scalarMap,
 		maxDegree: maxDegree,
 	}, nil
 }
 
-func (e Equation) MaxDegree() int {
-	return e.maxDegree
-}
-
-func (e Equation) IsEmpty() bool {
-	for _, scalar := range e.scalar {
-		if scalar != 0 {
-			return false
-		}
-	}
-	return true
+func (e Equation) Scalar() parsing.ScalarMap {
+	return e.scalar
 }
 
 func (e Equation) ToString() string {

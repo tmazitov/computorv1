@@ -1,4 +1,4 @@
-package polynomial
+package parsing
 
 import (
 	"regexp"
@@ -6,10 +6,12 @@ import (
 	"strings"
 )
 
-func getMaxDegree(scalarMap map[int]float32) int {
+type ScalarMap map[int]float32
+
+func (m ScalarMap) GetMaxDegree() int {
 	var maxDegree int = -1
 
-	for degree := range scalarMap {
+	for degree := range m {
 		if degree > maxDegree {
 			maxDegree = degree
 		}
@@ -18,12 +20,12 @@ func getMaxDegree(scalarMap map[int]float32) int {
 	return maxDegree
 }
 
-func extractFromString(raw string) (map[int]float32, error) {
+func NewScalarMap(raw string) (ScalarMap, error) {
 
 	sides := strings.Split(raw, " = ")
 
 	var (
-		scalarMap    map[int]float32 = map[int]float32{}
+		scalarMap    ScalarMap = map[int]float32{}
 		tempSign     bool
 		tempScalar   float32
 		scalarRegexp *regexp.Regexp = regexp.MustCompile(`^[+-]?(\d+(\.\d+)?|\.\d+)$`)
@@ -76,4 +78,25 @@ func extractFromString(raw string) (map[int]float32, error) {
 	}
 
 	return scalarMap, nil
+}
+
+func (m ScalarMap) MaxDegree() int {
+	var maxDegree int = -1
+
+	for degree := range m {
+		if degree > maxDegree {
+			maxDegree = degree
+		}
+	}
+
+	return maxDegree
+}
+
+func (m ScalarMap) IsEmpty() bool {
+	for _, scalar := range m {
+		if scalar != 0 {
+			return false
+		}
+	}
+	return true
 }
