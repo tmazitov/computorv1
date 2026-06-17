@@ -4,19 +4,17 @@ func sqrt(n float32) float32 {
     if n == 0 {
         return 0
     }
-    lo, hi := float32(0), n
-    if n < 1 {
-        hi = 1
+    x := n
+    if x < 1 {
+        x = 1
     }
-    for hi-lo > 0.00001 {
-        mid := (lo + hi) / 2
-        if mid*mid > n {
-            hi = mid
-        } else {
-            lo = mid
+    for {
+        next := (x + n/x) / 2
+        if next == x {
+            return x
         }
+        x = next
     }
-    return (lo + hi) / 2
 }
 
 func (e Equation) Solve() []Root {
