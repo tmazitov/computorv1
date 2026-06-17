@@ -12,8 +12,8 @@ type ScalarMap map[int]float32
 func (m ScalarMap) GetMaxDegree() int {
 	var maxDegree int = -1
 
-	for degree := range m {
-		if degree > maxDegree {
+	for degree, scalar := range m {
+		if scalar != 0 && degree > maxDegree {
 			maxDegree = degree
 		}
 	}
@@ -81,24 +81,13 @@ func NewScalarMap(raw string) (ScalarMap, error) {
 		}
 	}
 
-	if scalarMap.IsEmpty() {
+	if len(scalarMap) == 0 {
 		return nil, errors.New("computorv1 parsing error: empty equation")
 	}
 
 	return scalarMap, nil
 }
 
-func (m ScalarMap) MaxDegree() int {
-	var maxDegree int = -1
-
-	for degree := range m {
-		if degree > maxDegree {
-			maxDegree = degree
-		}
-	}
-
-	return maxDegree
-}
 
 func (m ScalarMap) IsEmpty() bool {
 	for _, scalar := range m {

@@ -53,15 +53,17 @@ func main() {
 
 	fmt.Printf("Polynomial degree: %d\n", equationDegree)
 	if equationDegree > 2 {
-		fmt.Println("The polynomial degree is stricly greater than 2, I can't solve.")
+		fmt.Println("The polynomial degree is strictly greater than 2, I can't solve.")
 		return
-	}	
-	
+	}
+
 	roots := equation.Solve()
-	if len(roots) == 0 {
-		fmt.Println("Discriminant is strictly negative, no real solution.")
+	if equationDegree == 1 {
+		fmt.Println("The solution is:")
 	} else if len(roots) == 1 {
 		fmt.Println("Discriminant is zero, the solution is:")
+	} else if len(roots) == 2 && roots[0].Im() != 0 {
+		fmt.Println("Discriminant is strictly negative, the two complex solutions are:")
 	} else {
 		fmt.Println("Discriminant is strictly positive, the two solutions are:")
 	}

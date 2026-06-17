@@ -1,4 +1,4 @@
-NAME	= computorv1
+NAME	= computor
 
 all:
 	go build -o $(NAME) .

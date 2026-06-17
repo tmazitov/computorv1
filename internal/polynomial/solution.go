@@ -1,6 +1,9 @@
 package polynomial
 
 func sqrt(n float32) float32 {
+    if n == 0 {
+        return 0
+    }
     lo, hi := float32(0), n
     if n < 1 {
         hi = 1
@@ -44,5 +47,5 @@ func (e Equation) Solve() []Root {
 	sqrtD := sqrt(-d)
 	re := -b / (2 * a)
 	im := sqrtD / (2 * a)
-	return []Root{NewRoot(re, -im), NewRoot(re, im)}
+	return []Root{NewRoot(re, im), NewRoot(re, -im)}
 }

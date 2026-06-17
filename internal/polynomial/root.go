@@ -67,7 +67,7 @@ func formatImag(num, den int) string {
 
 func (r Root) ToString() string {
 	if r.im == 0 {
-		return fmt.Sprintf("%.6f", r.re)
+		return fmt.Sprintf("%.6g", r.re)
 	}
 
 	imNum, imDen := toFraction(r.im)
