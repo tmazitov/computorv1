@@ -3,26 +3,42 @@ package main
 import (
 	"fmt"
 	"log"
-
+	"bufio"
+	"os"
+	"strings"
 	"github.com/tmazitov/computorv1/internal/parsing"
 	"github.com/tmazitov/computorv1/internal/polynomial"
 )
+
+func fatal(err error) {
+	fmt.Fprintln(os.Stderr, err)
+	os.Exit(1)
+}
 
 func main() {
 
 	raw, err := parsing.GetEquation()
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+	}
+	if len(raw) == 0 {
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("Equation: ")
+		str, err := reader.ReadString('\n')
+		if err != nil {
+			log.Fatal(err)
+		}
+		raw = strings.ReplaceAll(str, "\n", "")
 	}
 
 	scalarMap, err := parsing.NewScalarMap(raw)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 
 	equation, err := polynomial.NewEquation(scalarMap)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 	fmt.Printf("Reduced form: %s\n", equation.ToString())
 

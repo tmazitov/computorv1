@@ -2,6 +2,7 @@ package parsing
 
 import (
 	"regexp"
+	"errors"
 	"strconv"
 	"strings"
 )
@@ -21,6 +22,10 @@ func (m ScalarMap) GetMaxDegree() int {
 }
 
 func NewScalarMap(raw string) (ScalarMap, error) {
+
+	if len(raw) == 0 {
+		return nil, errors.New("computorv1 parsing error: empty equation")
+	}
 
 	sides := strings.Split(raw, " = ")
 
@@ -53,7 +58,6 @@ func NewScalarMap(raw string) (ScalarMap, error) {
 			}
 
 			if degreeRegexp.MatchString(part) {
-
 				degree, err := strconv.Atoi(part[2:])
 				if err != nil {
 					return nil, err
@@ -75,6 +79,10 @@ func NewScalarMap(raw string) (ScalarMap, error) {
 				tempSign = false
 			}
 		}
+	}
+
+	if scalarMap.IsEmpty() {
+		return nil, errors.New("computorv1 parsing error: empty equation")
 	}
 
 	return scalarMap, nil
